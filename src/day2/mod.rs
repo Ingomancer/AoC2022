@@ -1,5 +1,4 @@
-use std::path::Path;
 
-pub fn run(path: &Path) {
+pub fn run(input: String) {
     println!("Did a task again!")
 }
