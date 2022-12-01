@@ -1,6 +1,5 @@
 pub fn run(input: String) {
-    let mut vec: Vec<u32> = Vec::new();
-    sum_calories_per_elf(&mut vec, input);
+    let vec = sum_calories_per_elf(input);
     let mut highest_calories = sum_n_highest(&vec, 1);
     println!("{}", highest_calories);
 
@@ -8,8 +7,8 @@ pub fn run(input: String) {
     println!("{}", highest_calories);
 }
 
-fn sum_n_highest(vec: &Vec<u32>, n: u32) -> u32 {
-    let mut vec = vec.clone();
+fn sum_n_highest(vec: &[u32], n: u32) -> u32 {
+    let mut vec = vec.to_owned();
     vec.sort();
     let mut sum_cals = 0;
 
@@ -20,8 +19,8 @@ fn sum_n_highest(vec: &Vec<u32>, n: u32) -> u32 {
     sum_cals
 }
 
-fn sum_calories_per_elf(vec: &mut Vec<u32>, s: String) {
-    vec.push(0);
+fn sum_calories_per_elf(s: String) -> Vec<u32> {
+    let mut vec = vec![0];
     for line in s.lines() {
         if line.is_empty() {
             vec.push(0);
@@ -30,4 +29,5 @@ fn sum_calories_per_elf(vec: &mut Vec<u32>, s: String) {
             vec[len] = vec.last().unwrap() + line.parse::<u32>().unwrap();
         }
     }
+    vec
 }
