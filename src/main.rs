@@ -14,6 +14,6 @@ fn main() {
     match day {
         1 => day1::run(input),
         2 => day2::run(input),
-        _ => println!("Unkown day"),
+        _ => println!("Unknown day"),
     }
 }
