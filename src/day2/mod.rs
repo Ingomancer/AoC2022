@@ -1,7 +1,6 @@
-use std::{fmt::Error, collections::HashMap};
+use std::collections::HashMap;
 
-
-pub fn run(input: String){
+pub fn run(input: String) {
     let mut score1 = 0;
     let mut score2 = 0;
     let mut beats = HashMap::new();
@@ -34,10 +33,15 @@ pub fn run(input: String){
     println!("{}", score2);
 }
 
-fn find_move_with_outcome<'a>(choices: &'a Vec<&str>, opp: &str, beats: &HashMap<&str, &str>, new_score: i32) -> &'a str{
+fn find_move_with_outcome<'a>(
+    choices: &'a Vec<&str>,
+    opp: &str,
+    beats: &HashMap<&str, &str>,
+    new_score: i32,
+) -> &'a str {
     for choice in choices {
         if play_rps(opp, choice, beats) == new_score {
-            return choice
+            return choice;
         }
     }
     ""
