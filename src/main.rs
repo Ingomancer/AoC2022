@@ -7,8 +7,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let day: u32 = std::env::args()
         .nth(1)
         .expect("Must supply a day")
-        .parse()
-        .expect("Day must be a number");
+        .parse()?;
     let path = format!("src/day{}/input", day);
     let input = fs::read_to_string(Path::new(&path))?;
     match day {
