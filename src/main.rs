@@ -2,6 +2,7 @@ use std::{error::Error, fs, path::Path};
 
 mod day1;
 mod day2;
+mod day3;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let day: u32 = std::env::args()
@@ -13,6 +14,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     match day {
         1 => day1::run(input),
         2 => day2::run(input),
+        3 => day3::run(input),
         _ => println!("Unknown day"),
     }
     Ok(())
