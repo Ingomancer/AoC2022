@@ -54,6 +54,7 @@ pub fn run(input: String) {
     for index in 1..stacks2.len() + 1 {
         print!("{}", stacks2.get(&index).unwrap().back().unwrap());
     }
+    println!();
 }
 
 // move 3 from 9 to 7

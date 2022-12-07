@@ -1,4 +1,4 @@
-use std::{error::Error, fs, path::Path};
+use std::{error::Error, fs, path::Path, time::Instant};
 
 mod day1;
 mod day2;
@@ -15,15 +15,23 @@ fn main() -> Result<(), Box<dyn Error>> {
         .parse()?;
     let path = format!("src/day{}/input", day);
     let input = fs::read_to_string(Path::new(&path))?;
-    match day {
-        1 => day1::run(input),
-        2 => day2::run(input),
-        3 => day3::run(input),
-        4 => day4::run(input),
-        5 => day5::run(input),
-        6 => day6::run(input),
-        7 => day7::run(input),
-        _ => println!("Unknown day"),
-    }
+
+    let day_func = match day {
+        1 => day1::run,
+        2 => day2::run,
+        3 => day3::run,
+        4 => day4::run,
+        5 => day5::run,
+        6 => day6::run,
+        7 => day7::run,
+        _ => unknown_day,
+    };
+    let now = Instant::now();
+    day_func(input);
+    println!("{}", now.elapsed().as_secs_f32());
     Ok(())
+}
+
+fn unknown_day(_input: String) {
+    println!("Unknown day")
 }
