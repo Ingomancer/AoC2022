@@ -22,5 +22,5 @@ fn set_from_range_str(str: &str) -> HashSet<u32> {
     let (start, end) = str.split_once('-').unwrap();
     let start: u32 = start.parse().unwrap();
     let end: u32 = end.parse().unwrap();
-    (start..end+1).collect()
+    (start..end + 1).collect()
 }

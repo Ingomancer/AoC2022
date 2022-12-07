@@ -21,12 +21,12 @@ pub fn run(input: String) {
                     stacks
                         .entry(count)
                         .and_modify(|v: &mut VecDeque<char>| v.push_front(letter))
-                        .or_insert(VecDeque::from([letter]));
+                        .or_insert_with(|| VecDeque::from([letter]));
                 }
                 count += 1;
             }
         } else {
-            if line.len() == 0 {
+            if line.is_empty() {
                 continue;
             }
             let line = line
@@ -50,7 +50,7 @@ pub fn run(input: String) {
     for index in 1..stacks.len() + 1 {
         print!("{}", stacks.get(&index).unwrap().back().unwrap());
     }
-    println!("");
+    println!();
     for index in 1..stacks2.len() + 1 {
         print!("{}", stacks2.get(&index).unwrap().back().unwrap());
     }

@@ -1,4 +1,4 @@
-use std::{collections::HashMap, vec};
+use std::vec;
 
 #[derive(Clone, Debug)]
 struct Dir {
@@ -9,7 +9,8 @@ struct Dir {
 
 impl Dir {
     fn size(&self) -> u32 {
-        return self.files.iter().fold(0, |acc, x| acc + x.size) + self.subdirs.iter().fold(0, |acc, x| acc + x.size());
+        return self.files.iter().fold(0, |acc, x| acc + x.size)
+            + self.subdirs.iter().fold(0, |acc, x| acc + x.size());
     }
 
     fn find_dirs_below_size(&self, size: u32) -> Vec<&Dir> {
@@ -37,7 +38,6 @@ impl Dir {
 
 #[derive(Clone, Debug)]
 struct File {
-    name: String,
     size: u32,
 }
 
@@ -57,28 +57,47 @@ pub fn run(input: String) {
                 parent.subdirs.push(curdir);
                 curdir = parent;
             } else {
-                    let position = curdir.subdirs.iter().position(|dir| dir.name == dirname).unwrap();
-                    let next_dir = curdir.subdirs.remove(position);
-                    dirstack.push(curdir.clone());
-                    curdir = next_dir;
+                let position = curdir
+                    .subdirs
+                    .iter()
+                    .position(|dir| dir.name == dirname)
+                    .unwrap();
+                let next_dir = curdir.subdirs.remove(position);
+                dirstack.push(curdir.clone());
+                curdir = next_dir;
             }
-
         } else if parts[0] != "$" {
             let size_or_dir = parts[0].parse::<u32>();
-            let name = parts[1];
             match size_or_dir {
-                Ok(size) => {curdir.files.push(File {name: name.to_owned(), size: size})}
-                Err(_) => {curdir.subdirs.push(Dir{name: name.to_owned(), subdirs: vec![], files: vec![]})}
+                Ok(size) => curdir.files.push(File { size }),
+                Err(_) => curdir.subdirs.push(Dir {
+                    name: parts[1].to_owned(),
+                    subdirs: vec![],
+                    files: vec![],
+                }),
             }
         }
     }
-    while ! dirstack.is_empty() {
+    while !dirstack.is_empty() {
         let mut parent = dirstack.pop().unwrap();
         parent.subdirs.push(curdir);
         curdir = parent;
     }
 
-    println!("{:?}", curdir.find_dirs_below_size(100000).iter().fold(0, |acc, x| acc + x.size()));
+    println!(
+        "{:?}",
+        curdir
+            .find_dirs_below_size(100000)
+            .iter()
+            .fold(0, |acc, x| acc + x.size())
+    );
     let candidates = curdir.find_dirs_above_size(30000000 - (70000000 - curdir.size()));
-    println!("{}", candidates.iter().min_by(|x, y| x.size().cmp(&y.size())).unwrap().size());
+    println!(
+        "{}",
+        candidates
+            .iter()
+            .min_by(|x, y| x.size().cmp(&y.size()))
+            .unwrap()
+            .size()
+    );
 }
