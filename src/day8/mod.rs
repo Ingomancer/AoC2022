@@ -1,4 +1,4 @@
-use std::{vec, cmp::Ordering};
+use std::{cmp::Ordering, vec};
 
 pub fn run(input: String) -> (String, String) {
     let mut grid: Vec<Vec<u32>> = vec![];
@@ -37,20 +37,20 @@ fn check_col_distance(i: usize, j: usize, grid: &[Vec<u32>]) -> u32 {
     for (row, item) in grid.iter().enumerate() {
         match row.cmp(&i) {
             Ordering::Less => {
-            if item[j] >= height {
-                up = 0;
+                if item[j] >= height {
+                    up = 0;
+                }
+                up += 1;
             }
-            up += 1;
-        },
-        Ordering::Greater => {
-            down += 1;
-            if item[j] >= height {
-                break;
+            Ordering::Greater => {
+                down += 1;
+                if item[j] >= height {
+                    break;
+                }
             }
-        },
-        _ => (),
+            _ => (),
+        }
     }
-}
     up * down
 }
 
@@ -65,15 +65,15 @@ fn check_row_distance(i: usize, j: usize, grid: &[Vec<u32>]) -> u32 {
                     left = 0;
                 }
                 left += 1;
-            },
+            }
             Ordering::Greater => {
                 right += 1;
                 if grid[i][col] >= height {
                     break;
                 }
-            },
+            }
             _ => (),
-    }
+        }
     }
     left * right
 }
