@@ -7,6 +7,7 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let day: u32 = std::env::args()
@@ -24,6 +25,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         5 => day5::run,
         6 => day6::run,
         7 => day7::run,
+        8 => day8::run,
         _ => unknown_day,
     };
     let now = Instant::now();
