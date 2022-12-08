@@ -14,6 +14,21 @@ fn main() -> Result<(), Box<dyn Error>> {
         .nth(1)
         .expect("Must supply a day")
         .parse()?;
+    if day == 99 {
+        for i in 1..=8 {
+            run_day(i)?;
+        }
+    } else {
+        run_day(day)?;
+    }
+    Ok(())
+}
+
+fn unknown_day(_input: String) {
+    println!("Unknown day")
+}
+
+fn run_day(day: u32) -> Result<(), Box<dyn Error>> {
     let path = format!("src/day{}/input", day);
     let input = fs::read_to_string(Path::new(&path))?;
 
@@ -32,8 +47,4 @@ fn main() -> Result<(), Box<dyn Error>> {
     day_func(input);
     println!("{}", now.elapsed().as_secs_f32());
     Ok(())
-}
-
-fn unknown_day(_input: String) {
-    println!("Unknown day")
 }
