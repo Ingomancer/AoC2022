@@ -1,6 +1,5 @@
-pub fn run(input: String) {
-    println!("{}", part_1(&input));
-    println!("{}", part_2(&input));
+pub fn run(input: String) -> (String, String) {
+    (part_1(&input).to_string(), part_2(&input).to_string())
 }
 
 fn part_1(input: &str) -> u32 {

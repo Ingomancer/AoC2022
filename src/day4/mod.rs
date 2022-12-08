@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-pub fn run(input: String) {
+pub fn run(input: String) -> (String, String) {
     let mut subset_count = 0;
     let mut intersection_count = 0;
     for line in input.lines() {
@@ -14,8 +14,7 @@ pub fn run(input: String) {
             intersection_count += 1;
         }
     }
-    println!("{}", subset_count);
-    println!("{}", intersection_count);
+    (subset_count.to_string(), intersection_count.to_string())
 }
 
 fn set_from_range_str(str: &str) -> HashSet<u32> {

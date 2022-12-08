@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-pub fn run(input: String) {
+pub fn run(input: String) -> (String, String) {
     let mut score1 = 0;
     let mut score2 = 0;
     let mut beats = HashMap::new();
@@ -29,8 +29,7 @@ pub fn run(input: String) {
         }
         score2 += play_rps(opp, your_move, &beats) + score_shape(your_move);
     }
-    println!("{}", score1);
-    println!("{}", score2);
+    (score1.to_string(), score2.to_string())
 }
 
 fn find_move_with_outcome<'a>(

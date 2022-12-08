@@ -40,22 +40,20 @@ struct File {
     size: u32,
 }
 
-pub fn run(input: String) {
+pub fn run(input: String) -> (String, String) {
     let root = build_filesystem_tree(input);
 
-    println!(
-        "{}",
+    (
         root.dirs_of_at_most_size(100000)
             .iter()
             .fold(0, |acc, x| acc + x.size())
-    );
-    println!(
-        "{}",
+            .to_string(),
         root.dirs_of_at_least_size(30000000 - (70000000 - root.size()))
             .iter()
             .min_by(|x, y| x.size().cmp(&y.size()))
             .unwrap()
             .size()
+            .to_string(),
     )
 }
 

@@ -16,19 +16,19 @@ fn main() -> Result<(), Box<dyn Error>> {
         .parse()?;
     if day == 99 {
         for i in 1..=8 {
-            run_day(i)?;
+            run_day(i, false)?;
         }
     } else {
-        run_day(day)?;
+        run_day(day, true)?;
     }
     Ok(())
 }
 
-fn unknown_day(_input: String) {
-    println!("Unknown day")
+fn unknown_day(_input: String) -> (String, String) {
+    ("Unknown".to_owned(), "Day".to_owned())
 }
 
-fn run_day(day: u32) -> Result<(), Box<dyn Error>> {
+fn run_day(day: u32, print: bool) -> Result<(), Box<dyn Error>> {
     let path = format!("src/day{}/input", day);
     let input = fs::read_to_string(Path::new(&path))?;
 
@@ -44,7 +44,10 @@ fn run_day(day: u32) -> Result<(), Box<dyn Error>> {
         _ => unknown_day,
     };
     let now = Instant::now();
-    day_func(input);
+    let (part1, part2) = day_func(input);
     println!("{}", now.elapsed().as_secs_f32());
+    if print {
+        println!("{}, {}", part1, part2);
+    }
     Ok(())
 }

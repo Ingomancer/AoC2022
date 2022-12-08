@@ -2,7 +2,7 @@ use std::collections::{HashMap, VecDeque};
 
 use itertools::Itertools;
 
-pub fn run(input: String) {
+pub fn run(input: String) -> (String, String) {
     let mut instructions = false;
 
     let mut stacks = HashMap::new();
@@ -47,14 +47,16 @@ pub fn run(input: String) {
             stacks2.get_mut(&end).unwrap().append(&mut p2boxes);
         }
     }
+    let mut part1 = String::new();
     for index in 1..stacks.len() + 1 {
-        print!("{}", stacks.get(&index).unwrap().back().unwrap());
+        part1.push(*stacks.get(&index).unwrap().back().unwrap());
     }
-    println!();
+
+    let mut part2 = String::new();
     for index in 1..stacks2.len() + 1 {
-        print!("{}", stacks2.get(&index).unwrap().back().unwrap());
+        part2.push(*stacks2.get(&index).unwrap().back().unwrap());
     }
-    println!();
+    (part1, part2)
 }
 
 // move 3 from 9 to 7

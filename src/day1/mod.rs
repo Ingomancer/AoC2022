@@ -1,10 +1,9 @@
-pub fn run(input: String) {
+pub fn run(input: String) -> (String, String) {
     let vec = sum_calories_per_elf(input);
-    let mut highest_calories = sum_n_highest(&vec, 1);
-    println!("{}", highest_calories);
+    let highest_calories1 = sum_n_highest(&vec, 1);
 
-    highest_calories = sum_n_highest(&vec, 3);
-    println!("{}", highest_calories);
+    let highest_calories2 = sum_n_highest(&vec, 3);
+    (highest_calories1.to_string(), highest_calories2.to_string())
 }
 
 fn sum_n_highest(vec: &[u32], n: u32) -> u32 {
