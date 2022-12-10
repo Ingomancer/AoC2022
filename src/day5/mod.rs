@@ -58,5 +58,3 @@ pub fn run(input: String) -> (String, String) {
     }
     (part1, part2)
 }
-
-// move 3 from 9 to 7
