@@ -23,7 +23,7 @@ pub fn run(input: String) -> (String, String) {
     let mut visited = HashSet::new();
     let mut visited2 = HashSet::new();
     for line in input.lines() {
-        let (direction, distance) = line.split_once(" ").unwrap();
+        let (direction, distance) = line.split_once(' ').unwrap();
         let direction = match direction {
             "U" => Move {
                 axis: Axis::Y,
@@ -48,15 +48,14 @@ pub fn run(input: String) -> (String, String) {
         };
         for _ in 0..distance.parse().unwrap() {
             for i in 0..rope.len() - 1 {
-                let actual_direction;
-                if i > 0 {
-                    actual_direction = Move {
+                let actual_direction = if i > 0 {
+                    Move {
                         axis: Axis::Y,
                         distance: 0,
-                    };
+                    }
                 } else {
-                    actual_direction = direction;
-                }
+                    direction
+                };
 
                 let mut head = rope[i];
                 let mut tail = rope[i + 1];
@@ -73,8 +72,8 @@ pub fn run(input: String) -> (String, String) {
         }
     }
     (
-        format!("{}", visited.len()).to_owned(),
-        format!("{}", visited2.len()).to_owned(),
+        format!("{}", visited.len()),
+        format!("{}", visited2.len()),
     )
 }
 

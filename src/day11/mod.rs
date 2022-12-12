@@ -43,7 +43,7 @@ pub fn run(input: String) -> (String, String) {
                     inspected[monkey] += 1;
                     let mut item = monkeys[monkey].items.remove(0);
                     item = (monkeys[monkey].oper)(item);
-                    item = item / 3;
+                    item /= 3;
                     let target = (monkeys[monkey].test)(item);
                     monkeys[target].items.push(item);
                 }
@@ -51,7 +51,7 @@ pub fn run(input: String) -> (String, String) {
             while !monkeys[monkey].items2.is_empty() {
                 inspected2[monkey] += 1;
                 let mut item = monkeys[monkey].items2.remove(0);
-                item = item % divider;
+                item %= divider;
                 item = (monkeys[monkey].oper)(item);
                 let target = (monkeys[monkey].test)(item);
                 monkeys[target].items2.push(item);
@@ -66,8 +66,8 @@ pub fn run(input: String) -> (String, String) {
     let second_highest2 = inspected2.pop().unwrap();
 
     (
-        format!("{}", highest * second_highest).to_owned(),
-        format!("{}", highest2 * second_highest2).to_owned(),
+        format!("{}", highest * second_highest),
+        format!("{}", highest2 * second_highest2),
     )
 }
 
@@ -81,7 +81,7 @@ fn get_items(str: &str) -> Vec<u128> {
 }
 
 fn get_oper(str: &str) -> Box<dyn Fn(u128) -> u128> {
-    let oper = str.split_once("old ").unwrap().1.split_once(" ").unwrap();
+    let oper = str.split_once("old ").unwrap().1.split_once(' ').unwrap();
     let num = oper.1.parse::<u128>();
     if oper.0 == "+" {
         match num {

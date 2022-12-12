@@ -11,13 +11,13 @@ pub fn run(input: String) -> (String, String) {
     for line in input.lines() {
         let ticks;
         let mut num = 0;
-        if let Some((cmd, add)) = line.split_once(" ") {
+        if let Some((_cmd, add)) = line.split_once(' ') {
             num = add.parse().unwrap();
             ticks = 2;
         } else {
             ticks = 1;
         }
-        for i in 0..ticks {
+        for _i in 0..ticks {
             cycle += 1;
             cell += 1;
             if interesting_cycles.contains(&cycle) {
@@ -39,13 +39,13 @@ pub fn run(input: String) -> (String, String) {
     let path = "word.png";
     make_png(display.clone(), path);
     let letters = read_image(path);
-    (format!("{}", sum).to_owned(), letters.to_owned())
+    (format!("{}", sum), letters)
 }
 
 fn make_png(display: Vec<String>, path: &str) {
     let path = Path::new(path);
     let file = File::create(path).unwrap();
-    let ref mut w = BufWriter::new(file);
+    let w = &mut BufWriter::new(file);
 
     let mut encoder = png::Encoder::new(
         w,
@@ -84,6 +84,7 @@ fn make_png(display: Vec<String>, path: &str) {
     writer.write_image_data(&data).unwrap();
 }
 
-fn read_image(path: &str) -> String {
-    tesseract::ocr(path, "eng").unwrap()
+fn read_image(_path: &str) -> String {
+    "".to_owned()
+    // tesseract::ocr(path, "eng").unwrap()
 }

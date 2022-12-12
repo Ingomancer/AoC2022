@@ -1,6 +1,9 @@
 use std::{error::Error, fs, path::Path, time::Instant};
 
 mod day1;
+mod day10;
+mod day11;
+mod day12;
 mod day2;
 mod day3;
 mod day4;
@@ -9,8 +12,6 @@ mod day6;
 mod day7;
 mod day8;
 mod day9;
-mod day10;
-mod day11;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let day: u32 = std::env::args()
@@ -47,6 +48,7 @@ fn run_day(day: u32, print: bool) -> Result<(), Box<dyn Error>> {
         9 => day9::run,
         10 => day10::run,
         11 => day11::run,
+        12 => day12::run,
         _ => unknown_day,
     };
     let now = Instant::now();
