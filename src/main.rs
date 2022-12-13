@@ -14,12 +14,12 @@ mod day8;
 mod day9;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let day: u32 = std::env::args()
+    let day: i32 = std::env::args()
         .nth(1)
         .expect("Must supply a day")
-        .parse()?;
-    if day == 99 {
-        for i in 1..=8 {
+        .parse().unwrap_or(-1);
+    if day == -1 {
+        for i in 1..=9 {
             run_day(i, false)?;
         }
     } else {
@@ -32,7 +32,7 @@ fn unknown_day(_input: String) -> (String, String) {
     ("Unknown".to_owned(), "Day".to_owned())
 }
 
-fn run_day(day: u32, print: bool) -> Result<(), Box<dyn Error>> {
+fn run_day(day: i32, print: bool) -> Result<(), Box<dyn Error>> {
     let path = format!("src/day{}/input", day);
     let input = fs::read_to_string(Path::new(&path))?;
 

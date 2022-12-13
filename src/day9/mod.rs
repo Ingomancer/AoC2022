@@ -71,10 +71,7 @@ pub fn run(input: String) -> (String, String) {
             }
         }
     }
-    (
-        format!("{}", visited.len()),
-        format!("{}", visited2.len()),
-    )
+    (format!("{}", visited.len()), format!("{}", visited2.len()))
 }
 
 fn move_rope(head: Point, tail: Point, direction: &Move) -> (Point, Point) {
