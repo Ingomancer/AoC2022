@@ -11,7 +11,13 @@ pub fn run(input: String) -> (String, String) {
     let mut inputiter = input.lines().peekable();
     let mut correct = 0;
     let mut index = 0;
-    let mut all_lines = vec![];
+
+    let div1 = parse_line("[[2]]");
+    let div2 = parse_line("[[6]]");
+    let mut div1_index = 1;
+    let mut div2_index = 2;
+    // 0.0742615
+    // 5185, 23751
     while inputiter.peek().is_some() {
         index += 1;
         let line1 = inputiter.next().unwrap();
@@ -19,6 +25,19 @@ pub fn run(input: String) -> (String, String) {
         inputiter.next();
         let line1 = parse_line(line1);
         let line2 = parse_line(line2);
+
+        if check_order(line1.clone(), div1.clone()) == Ordering::Less {
+          div1_index += 1;
+        }
+        if check_order(line2.clone(), div1.clone()) == Ordering::Less {
+          div1_index += 1;
+        }
+        if check_order(line1.clone(), div2.clone()) == Ordering::Less {
+          div2_index += 1;
+        }
+        if check_order(line2.clone(), div2.clone()) == Ordering::Less {
+          div2_index += 1;
+        }
         match check_order(line1.clone(), line2.clone()) {
             Ordering::Less => {
                 correct += index;
@@ -28,28 +47,11 @@ pub fn run(input: String) -> (String, String) {
                 println!("I don't think this should happen");
             }
         }
-        all_lines.push(line1);
-        all_lines.push(line2);
-    }
-    let div1 = parse_line("[[2]]");
-    let div2 = parse_line("[[6]]");
-    all_lines.push(div1.clone());
-    all_lines.push(div2.clone());
-    all_lines.sort_by(|a, b| check_order(a.clone(), b.clone()));
-    index = 0;
-    let mut decoder = 1;
-    for line in all_lines.iter() {
-        index += 1;
-        if check_order(line.clone(), div1.clone()) == Ordering::Equal
-            || check_order(line.clone(), div2.clone()) == Ordering::Equal
-        {
-            decoder *= index;
-        }
     }
 
     (
         format!("{correct}").to_owned(),
-        format!("{decoder}").to_owned(),
+        format!("{}", div1_index*div2_index).to_owned(),
     )
 }
 
