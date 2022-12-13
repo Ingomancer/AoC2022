@@ -4,6 +4,7 @@ mod day1;
 mod day10;
 mod day11;
 mod day12;
+mod day13;
 mod day2;
 mod day3;
 mod day4;
@@ -17,7 +18,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     let day: i32 = std::env::args()
         .nth(1)
         .expect("Must supply a day")
-        .parse().unwrap_or(-1);
+        .parse()
+        .unwrap_or(-1);
     if day == -1 {
         for i in 1..=9 {
             run_day(i, false)?;
@@ -49,6 +51,7 @@ fn run_day(day: i32, print: bool) -> Result<(), Box<dyn Error>> {
         10 => day10::run,
         11 => day11::run,
         12 => day12::run,
+        13 => day13::run,
         _ => unknown_day,
     };
     let now = Instant::now();

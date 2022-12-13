@@ -35,7 +35,6 @@ pub fn run(input: String) -> (String, String) {
         }
     }
 
-
     (format!("{path}"), format!("{shortest}"))
 }
 
