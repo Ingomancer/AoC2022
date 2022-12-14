@@ -27,16 +27,16 @@ pub fn run(input: String) -> (String, String) {
         let line2 = parse_line(line2);
 
         if check_order(line1.clone(), div1.clone()) == Ordering::Less {
-          div1_index += 1;
+            div1_index += 1;
         }
         if check_order(line2.clone(), div1.clone()) == Ordering::Less {
-          div1_index += 1;
+            div1_index += 1;
         }
         if check_order(line1.clone(), div2.clone()) == Ordering::Less {
-          div2_index += 1;
+            div2_index += 1;
         }
         if check_order(line2.clone(), div2.clone()) == Ordering::Less {
-          div2_index += 1;
+            div2_index += 1;
         }
         match check_order(line1.clone(), line2.clone()) {
             Ordering::Less => {
@@ -51,7 +51,7 @@ pub fn run(input: String) -> (String, String) {
 
     (
         format!("{correct}").to_owned(),
-        format!("{}", div1_index*div2_index).to_owned(),
+        format!("{}", div1_index * div2_index).to_owned(),
     )
 }
 
