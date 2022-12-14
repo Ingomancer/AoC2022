@@ -1,15 +1,17 @@
-use std::collections::HashMap;
+use std::{
+    collections::{HashMap},
+};
 
 pub fn run(input: String) -> (String, String) {
     let mut grid: Vec<Vec<u32>> = vec![];
-    let mut start_pos = (0, 0);
+    let mut cur_pos = (0, 0);
     let mut goal_pos = (0, 0);
     let mut p2_starts = vec![];
     for (y, line) in input.lines().enumerate() {
         let mut grid_row = vec![];
         for (x, letter) in line.chars().enumerate() {
             if letter == 'S' {
-                start_pos = (y, x);
+                cur_pos = (y, x);
                 grid_row.push('a' as u32);
                 p2_starts.push((y, x));
             } else if letter == 'E' {
@@ -25,17 +27,18 @@ pub fn run(input: String) -> (String, String) {
         grid.push(grid_row);
     }
     let mut visited = HashMap::new();
-    let path = find_goal(&grid, start_pos, goal_pos, &mut visited);
-    let mut shortest = 5000;
-
+    let path = find_goal(&grid, cur_pos, goal_pos, &mut visited, 0);
+    let mut shortest = u32::MAX;
     for start in p2_starts {
-        let path = find_goal(&grid, start, goal_pos, &mut visited);
+        let path = find_goal(&grid, start, goal_pos, &mut visited, 0);
         if path < shortest {
             shortest = path;
         }
     }
-
-    (format!("{path}"), format!("{shortest}"))
+    (
+        format!("{path}"),
+        format!("{shortest}"),
+    )
 }
 
 fn find_goal(
@@ -43,28 +46,34 @@ fn find_goal(
     cur_pos: (usize, usize),
     goal_pos: (usize, usize),
     visited: &mut HashMap<(usize, usize), u32>,
+    path_len: u32,
 ) -> u32 {
-    if cur_pos == goal_pos {
-        return 1;
-    }
-
     if visited.contains_key(&cur_pos) {
-        return visited[&cur_pos];
+        let len = visited[&cur_pos];
+        if path_len >= len {
+            return u32::MAX;
+        }
     }
+    visited.insert(cur_pos, path_len);
 
-    visited.insert(cur_pos, 5000);
+    if cur_pos == goal_pos {
+        return path_len;
+    }
 
     let mut possible_moves = find_possible_moves(grid, cur_pos);
+    if possible_moves.is_empty() {
+        return u32::MAX;
+    }
     possible_moves.sort_by_key(|a| manhattan(a, &goal_pos));
-    let mut min = 5000;
+    let mut min = u32::MAX;
     for new_pos in possible_moves {
-        let path = find_goal(grid, new_pos, goal_pos, visited);
-        if path <= min {
+        let path = find_goal(grid, new_pos, goal_pos, visited, path_len + 1);
+        if path < min {
             min = path;
         }
     }
-    visited.insert(cur_pos, min.saturating_add(1));
-    min.saturating_add(1)
+    visited.insert(cur_pos, path_len);
+    min
 }
 
 fn manhattan(a: &(usize, usize), b: &(usize, usize)) -> usize {

@@ -7,18 +7,18 @@ struct Coordinate {
 }
 
 pub fn run(input: String) -> (String, String) {
-    let (grid, left, right, bottom) = make_grid(input);
-    let (part1, part2) = drop_sand(grid, left, right, bottom);
+    let (grid, right, bottom) = make_grid(input);
+    let (part1, part2) = drop_sand(grid, right, bottom);
     (format!("{part1}").to_owned(), format!("{part2}").to_owned())
 }
 
-fn drop_sand(mut grid: HashSet<Coordinate>, left: u32, right: u32, bottom: u32) -> (u32, u32) {
+fn drop_sand(mut grid: HashSet<Coordinate>, right: u32, bottom: u32) -> (u32, u32) {
     let mut units = 0;
     let mut part1 = 0;
     let mut done = false;
     loop {
         let mut sand = Coordinate { x: 500, y: 0 };
-        while in_grid(&sand, left, right, bottom, part1) {
+        while in_grid(&sand, bottom, part1) {
             let mut next_sand = Coordinate {
                 x: sand.x,
                 y: sand.y + 1,
@@ -47,7 +47,7 @@ fn drop_sand(mut grid: HashSet<Coordinate>, left: u32, right: u32, bottom: u32) 
             }
             sand = next_sand;
         }
-        if !in_grid(&sand, left, right, bottom, part1) && part1 == 0 {
+        if !in_grid(&sand, bottom, part1) && part1 == 0 {
             part1 = units;
             for i in 0..right * 2 {
                 grid.insert(Coordinate {
@@ -64,20 +64,19 @@ fn drop_sand(mut grid: HashSet<Coordinate>, left: u32, right: u32, bottom: u32) 
     (part1, units)
 }
 
-fn in_grid(sand: &Coordinate, left: u32, right: u32, bottom: u32, part1: u32) -> bool {
+fn in_grid(sand: &Coordinate, bottom: u32, part1: u32) -> bool {
     if part1 != 0 {
         return true;
     }
-    if sand.x > left && sand.x < right && sand.y < bottom {
+    if sand.y < bottom {
         true
     } else {
         false
     }
 }
 
-fn make_grid(input: String) -> (HashSet<Coordinate>, u32, u32, u32) {
+fn make_grid(input: String) -> (HashSet<Coordinate>, u32, u32) {
     let mut grid = HashSet::new();
-    let mut left = u32::MAX;
     let mut right = 0;
     let mut bottom = 0;
     for line in input.lines() {
@@ -88,9 +87,6 @@ fn make_grid(input: String) -> (HashSet<Coordinate>, u32, u32, u32) {
             let y: u32 = y.parse().unwrap();
             if x > right {
                 right = x;
-            }
-            if x < left {
-                left = x;
             }
             if y > bottom {
                 bottom = y;
@@ -111,5 +107,5 @@ fn make_grid(input: String) -> (HashSet<Coordinate>, u32, u32, u32) {
             grid.insert(coordinate);
         }
     }
-    (grid, left, right, bottom)
+    (grid, right, bottom)
 }

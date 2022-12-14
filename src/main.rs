@@ -22,9 +22,11 @@ fn main() -> Result<(), Box<dyn Error>> {
         .parse()
         .unwrap_or(-1);
     if day == -1 {
-        for i in 1..=9 {
+        let now = Instant::now();
+        for i in 1..=14 {
             run_day(i, false)?;
         }
+        println!("{}", now.elapsed().as_secs_f32());
     } else {
         run_day(day, true)?;
     }
